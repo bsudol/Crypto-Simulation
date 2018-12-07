@@ -35,15 +35,6 @@ class Queue(object):
     def ArriveatQueue(self, newarrival):
         self.waitingentities.append(newarrival)
         self.waitingentities.sort(key = lambda x: x.fee, reverse = True)
-
-    # Exit the Queue without service
-    def LeaveQueue(self):
-        leaving = self.waitingentities[0]
-        newentities = []
-        for e in range(1, np.size(self.waitingentities)):
-            newentities.append(self.waitingentities[e])
-        self.waitingentities = newentities
-        return leaving
       
     def FinishBlock(self, currentBlock):
         newentities = []
@@ -53,10 +44,6 @@ class Queue(object):
     
     def inSys(self):
         return np.size(self.waitingentities)
-      
-        # Print an Entity (just arrival time)
-    def __repr__(self):
-        return str(self.starttime)
                     
 
 # General class for the entities that move through the Queues
@@ -194,3 +181,8 @@ plt.xlabel("transaction fee offered")
 plt.legend()
 plt.title("Delay in system")
 plt.show()
+
+print("Overall Cumulative Fees Paid over time = BRC's entering the system:", overallCumulativeFees)
+print("Fees Paid into the system per hour=", overallCumulativeFees/t_end)
+print("Average time in system", np.average(delay_time))
+print("Average transaction amt", np.average(feeAmount))
